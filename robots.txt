@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://edrago.github.com/sitemap.xml 

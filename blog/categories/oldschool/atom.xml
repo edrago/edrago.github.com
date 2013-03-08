@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Oldschool | 8-bit Triangles]]></title>
+  <link href="http://edrago.github.com/blog/categories/oldschool/atom.xml" rel="self"/>
+  <link href="http://edrago.github.com/"/>
+  <updated>2013-03-08T14:21:48-03:00</updated>
+  <id>http://edrago.github.com/</id>
+  <author>
+    <name><![CDATA[Edson Drago]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Oldschool multiplayer goodness with DOSBox]]></title>
+    <link href="http://edrago.github.com/2013/03/07-oldschool-multiplayer-goodness-with-dosbox.html"/>
+    <updated>2013-03-07T23:55:00-03:00</updated>
+    <id>http://edrago.github.com/2013/03/oldschool-multiplayer-goodness-with-dosbox</id>
+    <content type="html"><![CDATA[<p>  So, yesterday me and some friends were talking about how cool some of our
+childhood games were, and trying to remember the name of some of those titles
+or googling in search of these. Problem is, fond memories like these tends to
+distort the reality, and trying to find a title that you even wasn't capable of
+understanding a half-dozen words and by a few equivocated details...
+You see, it doesn't work all that well.</p>
+
+<p>  I digress.</p>
+
+<p>  Anyway... At one point we were talking about a game that most of us happened to
+had played, and agreed that it could bring lots of fun to play some multiplayer\
+matchs, specially because of the fact that we had played only single-player at
+the time.</p>
+
+<p>  The game in question is <strong>Constructor</strong>.</p>
+
+<p>  <img src="http://upload.wikimedia.org/wikipedia/en/9/9a/Constructor-pc.jpg" title="Constructor Cover" alt="Cover art" /></p>
+
+<p>But as this is a DOS/Win95 game, it generally don’t run in modern systems. This problem is solved by utilizing a x86/DOS emulator program, like <a href="http://www.dosbox.com/">DOSBox</a>. Other setback is that it uses an old network protocol for multiplayer, called IPX. So let’s get this old gem going.</p>
+
+<h3>FYI</h3>
+
+<p>First, I just want to make clear that these steps propably work with various old games as long as they use the IPX network protocol (like Doom, for example), but I don’t tested with other titles to know for sure. Maybe with for some just the installation process will work.</p>
+
+<h2>Installing and running old games with DOSBox</h2>
+
+<p>I will use windows path style to explaim the process, but you just need to adapt it according to your OS.</p>
+
+<p>Fist we need to mount the location that we want to install the game, for simplicity sake I chose C:
+<code>
+Z:\&gt;mount c "c:\"
+</code></p>
+
+<p>I am using an ISO image because I find it to be more convenient and created a ‘constructor’ folder beforehand, but you could mount your CD drive too. To mount an CD image:
+<code>
+Z:\&gt;imgmount d "path\to\image.iso" -t iso
+</code></p>
+
+<p>Or your physical drive:
+<code>
+Z:\&gt;mount d "D:\" -t cdrom
+</code></p>
+
+<p>We need to change our drive. Then, proceed to install the game from the disc.
+```
+Z:>D:
+D:>Install.exe</p>
+
+<h1>Then we can open the folder that you installed the game and test if worked</h1>
+
+<p>C:>Game.exe
+```</p>
+
+<p><strong>NOTE:</strong> Constructor needs the CD to execute and searchs for it in the ‘D:’ drive. So you need to mount it using this letter everytime you want to start the game.</p>
+
+<p>Great, the game is up and running. Now we just need to setup the IPX emulation. The best part? DOSBox ships with that feature already.</p>
+
+<h2>Getting multiplayer to work</h2>
+
+<p>Now that we have our game set up, we are going to enable the IPX emulation in DOSBox, that comes disabled by default.</p>
+
+<p>First, close DOSBox if it’s running and open the configuration file, that can be found in the following directory in Windows 7 (For other OS information look <a href="http://www.dosbox.com/wiki/Dosbox.conf">here</a>):</p>
+
+<p><em>C:\Users\<strong>&lt;Your Username></strong>\AppData\Local\DOSBox\dosbox.conf</em></p>
+
+<p>Now search for a line that says <em>“ipx=false”</em> at the end of the file and change the value to true.</p>
+
+<p>Finally, open DOSBox again and type the following command:
+```</p>
+
+<h1>Port is optional, default is 213</h1>
+
+<p>Z:>ipxnet startserver [port]
+```</p>
+
+<p>You should receive a <em>“IPX Tunneling Server started”</em> message. Now your friends can connect to your computer through your IP address, via LAN or Internet:
+```</p>
+
+<h1>Again, port is optional, if you started with a custom one, inform your friend</h1>
+
+<p>Z:>ipxnet connect <ip> [port]
+```</p>
+
+<p>If you have any problems with connection, make sure that you don’t have any firewall blocking DOSBox or that the correct port is <a href="http://portforward.com/">being forwarded</a> by your router.</p>
+
+<p>Open the game again and enjoy your afternoon lost robbing your firend’s HQ, sending a Hippie to protest in front of his factory and Tenants that never were happy once in their lives.</p>
+
+<h3><em>Fim</em></h3>
+]]></content>
+  </entry>
+  
+</feed>
