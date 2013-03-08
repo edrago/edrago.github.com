@@ -4,7 +4,7 @@
   <title><![CDATA[8-bit Triangles]]></title>
   <link href="http://edrago.github.com/atom.xml" rel="self"/>
   <link href="http://edrago.github.com/"/>
-  <updated>2013-03-08T14:21:48-03:00</updated>
+  <updated>2013-03-08T14:25:43-03:00</updated>
   <id>http://edrago.github.com/</id>
   <author>
     <name><![CDATA[Edson Drago]]></name>
@@ -15,8 +15,8 @@
   
   <entry>
     <title type="html"><![CDATA[Oldschool multiplayer goodness with DOSBox]]></title>
-    <link href="http://edrago.github.com/2013/03/07-oldschool-multiplayer-goodness-with-dosbox.html"/>
-    <updated>2013-03-07T23:55:00-03:00</updated>
+    <link href="http://edrago.github.com/2013/03/08-oldschool-multiplayer-goodness-with-dosbox.html"/>
+    <updated>2013-03-08T13:55:00-03:00</updated>
     <id>http://edrago.github.com/2013/03/oldschool-multiplayer-goodness-with-dosbox</id>
     <content type="html"><![CDATA[<p>  So, yesterday me and some friends were talking about how cool some of our
 childhood games were, and trying to remember the name of some of those titles
@@ -37,6 +37,9 @@ the time.</p>
 <p>  <img src="http://upload.wikimedia.org/wikipedia/en/9/9a/Constructor-pc.jpg" title="Constructor Cover" alt="Cover art" /></p>
 
 <p>But as this is a DOS/Win95 game, it generally don’t run in modern systems. This problem is solved by utilizing a x86/DOS emulator program, like <a href="http://www.dosbox.com/">DOSBox</a>. Other setback is that it uses an old network protocol for multiplayer, called IPX. So let’s get this old gem going.</p>
+
+<!-- more -->
+
 
 <h3>FYI</h3>
 

@@ -71,7 +71,7 @@ childhood games were, and trying to remember the name of some of those &hellip;"
       
   <header>
     
-      <h1 class="entry-title"><a href="/2013/03/07-oldschool-multiplayer-goodness-with-dosbox.html">Oldschool Multiplayer Goodness With DOSBox</a></h1>
+      <h1 class="entry-title"><a href="/2013/03/08-oldschool-multiplayer-goodness-with-dosbox.html">Oldschool Multiplayer Goodness With DOSBox</a></h1>
     
     
       <p class="meta">
@@ -87,7 +87,7 @@ childhood games were, and trying to remember the name of some of those &hellip;"
   
 
 
-<time datetime="2013-03-07T23:55:00-03:00" pubdate data-updated="true">Mar 7<span>th</span>, 2013</time>
+<time datetime="2013-03-08T13:55:00-03:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
         
       </p>
     
@@ -114,81 +114,12 @@ the time.</p>
 
 <p>But as this is a DOS/Win95 game, it generally don’t run in modern systems. This problem is solved by utilizing a x86/DOS emulator program, like <a href="http://www.dosbox.com/">DOSBox</a>. Other setback is that it uses an old network protocol for multiplayer, called IPX. So let’s get this old gem going.</p>
 
-<h3>FYI</h3>
-
-<p>First, I just want to make clear that these steps propably work with various old games as long as they use the IPX network protocol (like Doom, for example), but I don’t tested with other titles to know for sure. Maybe with for some just the installation process will work.</p>
-
-<h2>Installing and running old games with DOSBox</h2>
-
-<p>I will use windows path style to explaim the process, but you just need to adapt it according to your OS.</p>
-
-<p>Fist we need to mount the location that we want to install the game, for simplicity sake I chose C:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;mount c "c:\"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I am using an ISO image because I find it to be more convenient and created a ‘constructor’ folder beforehand, but you could mount your CD drive too. To mount an CD image:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;imgmount d "path\to\image.iso" -t iso</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or your physical drive:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;mount d "D:\" -t cdrom</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We need to change our drive. Then, proceed to install the game from the disc.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;D:
-</span><span class='line'>D:\&gt;Install.exe
-</span><span class='line'># Then we can open the folder that you installed the game and test if worked
-</span><span class='line'>C:\&gt;Game.exe</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>NOTE:</strong> Constructor needs the CD to execute and searchs for it in the ‘D:’ drive. So you need to mount it using this letter everytime you want to start the game.</p>
-
-<p>Great, the game is up and running. Now we just need to setup the IPX emulation. The best part? DOSBox ships with that feature already.</p>
-
-<h2>Getting multiplayer to work</h2>
-
-<p>Now that we have our game set up, we are going to enable the IPX emulation in DOSBox, that comes disabled by default.</p>
-
-<p>First, close DOSBox if it’s running and open the configuration file, that can be found in the following directory in Windows 7 (For other OS information look <a href="http://www.dosbox.com/wiki/Dosbox.conf">here</a>):</p>
-
-<p><em>C:\Users\<strong>&lt;Your Username></strong>\AppData\Local\DOSBox\dosbox.conf</em></p>
-
-<p>Now search for a line that says <em>“ipx=false”</em> at the end of the file and change the value to true.</p>
-
-<p>Finally, open DOSBox again and type the following command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Port is optional, default is 213
-</span><span class='line'>Z:\&gt;ipxnet startserver [port]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You should receive a <em>“IPX Tunneling Server started”</em> message. Now your friends can connect to your computer through your IP address, via LAN or Internet:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Again, port is optional, if you started with a custom one, inform your friend
-</span><span class='line'>Z:\&gt;ipxnet connect &lt;ip&gt; [port]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you have any problems with connection, make sure that you don’t have any firewall blocking DOSBox or that the correct port is <a href="http://portforward.com/">being forwarded</a> by your router.</p>
-
-<p>Open the game again and enjoy your afternoon lost robbing your firend’s HQ, sending a Hippie to protest in front of his factory and Tenants that never were happy once in their lives.</p>
-
-<h3><em>Fim</em></h3>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2013/03/08-oldschool-multiplayer-goodness-with-dosbox.html">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -243,7 +174,7 @@ the time.</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/03/07-oldschool-multiplayer-goodness-with-dosbox.html">Oldschool multiplayer goodness with DOSBox</a>
+        <a href="/2013/03/08-oldschool-multiplayer-goodness-with-dosbox.html">Oldschool multiplayer goodness with DOSBox</a>
       </li>
     
       <li class="post">
