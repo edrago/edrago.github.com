@@ -3,7 +3,7 @@ layout: post
 title: "Installing Mumble-Django behind Nginx"
 date: 2013-03-11 10:20
 comments: true
-categories: Python, Mumble, Nginx
+categories: [Python, Mumble, Nginx]
 ---
 
 So, I've been using murmur (the mumble server) on my VPS to host a server where 
@@ -44,23 +44,37 @@ $ cd virtualenv
 $ python virtualenv.py mumble-django
 ```
 
-After that move to the bin folder of the 'mumble-django' env and install some 
-dependencies.
+After that, use the _activate_ script that's present on the bin folder of the 
+'mumble-django' env so you can use the contents of env's _bin_ as functions. 
+This isn't necessary, is just for convenience. Then install some dependencies.
 ```
-$ cd mumble-django/bin
   # Pil needs to be compiled in the process and might protest due to some 
-  # dependencies, so a package for your distro could be installed.
-  # i.e. 'aptitude install python-imaging' (for debian)
-$ ./pip install pil 
-$ ./pip install simplejson # Same as pil, package 'python-simplejson' in debian
-$ ./pip install django
-$ ./pip install django-registration
-$ ./pip install gunicorn
+  # dependencies, I installed my distro package, but you could try to install
+  # it with pip
+  # i.e. pip install pil
+$ aptitude install python-imaging
+$ aptitude install python-simplejson # Same as pil, 'pip install simplejson'
+$ pip install django
+$ pip install django-registration
+$ pip install gunicorn
 ```
 
 Now, Mumble-Django needs some way to communicate with the murmur process and we 
 have two options. Using [D-Bus][] or [Ice][]. I chose Ice, but you can pick 
 whatever method that you think it's best.
+
+If you chose Ice you should install the _zeroc_ library. In debian it comes in 
+the package _"python-zeroc-ice"_.
+
+Because I am installing everything under virtualenv, it's necessary to provide 
+locally the libraries that I installed globally. So I link the necessary libs 
+to the _lib_ folder in my Env.
+``` 
+$ ln -s /usr/share/pyshared/PIL lib/python2.6/PIL
+$ ln -s /usr/share/pyshared/simplejson lib/python2.6/simplejson
+$ ln -s /usr/share/pyshared/Ice* lib/python2.6/
+$ ln -s /usr/lib/pyshared/python2.6/IcePy.so lib/python2.6/
+```
 
 After you configured your mumble server according to one of the two previous 
 links
