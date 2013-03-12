@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Installing Mumble-Django behind Nginx"
+title: "Installing Mumble-Django under virtualenv and behind Nginx"
 date: 2013-03-11 10:20
 comments: true
 categories: [Python, Mumble, Nginx]
@@ -54,7 +54,7 @@ This isn't necessary, is just for convenience. Then install some dependencies.
   # i.e. pip install pil
 $ aptitude install python-imaging
 $ aptitude install python-simplejson # Same as pil, 'pip install simplejson'
-$ pip install django
+$ pip install django==1.3
 $ pip install django-registration
 $ pip install gunicorn
 ```
@@ -76,11 +76,47 @@ $ ln -s /usr/share/pyshared/Ice* lib/python2.6/
 $ ln -s /usr/lib/pyshared/python2.6/IcePy.so lib/python2.6/
 ```
 
-After you configured your mumble server according to one of the two previous 
-links
+The next step is to download the lastest version of the Mumble-Django from 
+their [repository][3]. Go to "Tags" tab and download the version you want. I 
+recommend to download from the __Tag__ _stable_. Then we download and 
+uncompress it to our Env folder and do the initial setup.
+```
+$ wget https://bitbucket.org/Svedrin/mumble-django/get/stable.tar.gz
+$ tar xvfz stable.tar.gz
+$ cd stable/pyweb
+$ python manage.py syncdb
+```
+__Note:__ Don't forget to do this after using the ___activate___ script or 
+using the python provided in the ___env's bin___ folder.
+
+After you configured your mumble-django accordingly, it's time to deploy 
+gunicorn in Nginx. Let's start with Nginx config file.
+``` nginx nginx.conf
+server {
+     listen      80;
+     server_name mumble.edrago.me;
+ 
+     location / {
+         proxy_pass http://127.0.0.1:9999;
+     }
+ 
+     location /static {
+         alias /home/eddie/virtualenv-1.9.1/mumble-django/app/htdocs;
+     }
+ 
+     location /static/admin {
+         alias /home/eddie/virtualenv-1.9.1/mumble-django/lib/python2.6/site-packages/djan    go/contrib/admin/static/admin/;
+     }
+ 
+     location /mumble/media {
+         alias /home/eddie/virtualenv-1.9.1/mumble-django/app/pyweb/mumble/media/;
+     }
+}
+```
 
 <!-- Link References -->
   [1]: http://docs.mumble-django.org/en/installation.html#manual-installation
-  [2]: https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.1.tar.gz
+  [2]: https://pypi.python.org/packages/source/v/virtualenv
+  [3]: https://bitbucket.org/Svedrin/mumble-django/downloads
   [D-Bus]: http://docs.mumble-django.org/en/connecting_murmur_to_dbus.html#en-connecting-dbus "Connecting Murmur to DBus"
   [Ice]: http://docs.mumble-django.org/en/connecting_murmur_to_ice.html#en-connecting-ice "Making Murmur available via Ice"
