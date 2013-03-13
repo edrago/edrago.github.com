@@ -41,20 +41,21 @@ First, download the source from the [official page][2] on pypi wiki and
 initialize the Env.
 ```
 $ cd virtualenv
-$ python virtualenv.py mumble-django
+$ python virtualenv.py MD
 ```
 
 After that, use the _activate_ script that's present on the bin folder of the 
-'mumble-django' env so you can use the contents of env's _bin_ as functions. 
+'MD' env so you can use the contents of env's _bin_ as functions. 
 This isn't necessary, is just for convenience. Then install some dependencies.
 ```
+$ source MD/bin/activate
   # Pil needs to be compiled in the process and might protest due to some 
   # dependencies, I installed my distro package, but you could try to install
   # it with pip
   # i.e. pip install pil
-$ aptitude install python-imaging
-$ aptitude install python-simplejson # Same as pil, 'pip install simplejson'
-$ pip install django==1.3
+$ aptitude install python-imaging # PIL
+$ aptitude install python-simplejson # Same as PIL, 'pip install simplejson'
+$ pip install django==1.2.3
 $ pip install django-registration
 $ pip install gunicorn
 ```
@@ -76,22 +77,27 @@ $ ln -s /usr/share/pyshared/Ice* lib/python2.6/
 $ ln -s /usr/lib/pyshared/python2.6/IcePy.so lib/python2.6/
 ```
 
+Installing Mumble-Django
+------------------------
+
 The next step is to download the lastest version of the Mumble-Django from 
 their [repository][3]. Go to "Tags" tab and download the version you want. I 
 recommend to download from the __Tag__ _stable_. Then we download and 
 uncompress it to our Env folder and do the initial setup.
 ```
 $ wget https://bitbucket.org/Svedrin/mumble-django/get/stable.tar.gz
-$ tar xvfz stable.tar.gz
-$ cd stable/pyweb
+$ tar xvfz stable.tar.gz # rename the folder extracted to what you want
+$ cd mumble-django/pyweb # I renamed mine to mumble-django
 $ python manage.py syncdb
 ```
 __Note:__ Don't forget to do this after using the ___activate___ script or 
 using the python provided in the ___env's bin___ folder.
 
+Configuring Nginx and Gunicorn
+------------------------------
 After you configured your mumble-django accordingly, it's time to deploy 
 gunicorn in Nginx. Let's start with Nginx config file.
-``` nginx nginx.conf
+``` nginx mumble-django.conf
 server {
      listen      80;
      server_name mumble.edrago.me;
@@ -105,7 +111,7 @@ server {
      }
  
      location /static/admin {
-         alias /home/eddie/virtualenv-1.9.1/mumble-django/lib/python2.6/site-packages/djan    go/contrib/admin/static/admin/;
+         alias /home/eddie/virtualenv-1.9.1/mumble-django/lib/python2.6/site-packages/django/contrib/admin/static/admin/;
      }
  
      location /mumble/media {
@@ -116,7 +122,7 @@ server {
 
 <!-- Link References -->
   [1]: http://docs.mumble-django.org/en/installation.html#manual-installation
-  [2]: https://pypi.python.org/packages/source/v/virtualenv
+  [2]: https://pypi.python.org/pypi/virtualenv
   [3]: https://bitbucket.org/Svedrin/mumble-django/downloads
   [D-Bus]: http://docs.mumble-django.org/en/connecting_murmur_to_dbus.html#en-connecting-dbus "Connecting Murmur to DBus"
   [Ice]: http://docs.mumble-django.org/en/connecting_murmur_to_ice.html#en-connecting-ice "Making Murmur available via Ice"
