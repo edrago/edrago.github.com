@@ -1,24 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[8-bit Triangles]]></title>
-  <link href="http://edrago.github.com/atom.xml" rel="self"/>
-  <link href="http://edrago.github.com/"/>
-  <updated>2013-03-19T12:13:11-03:00</updated>
-  <id>http://edrago.github.com/</id>
-  <author>
-    <name><![CDATA[Edson Drago]]></name>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Installing Mumble-Django under virtualenv and behind Nginx - 8-bit Triangles</title>
+	<meta name="author" content="Edson Drago">
+
+	
+	<meta name="description" content="So, I&#8217;ve been using murmur (the mumble server) on my VPS to host a server where
+my friends can gather and talk freely for some time now. But &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="8-bit Triangles" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">8-bit Triangles</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:edrago.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		<a class="github" href="https://github.com/edrago" title="GitHub">GitHub</a>
+		
     
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+		
+		
+		
+		
+		<a class="delicious" href="http://delicious.com/edrago" title="Delicious">Delicious</a>
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:edrago.github.com">
+	</form>
+</nav>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Mumble-Django under virtualenv and behind Nginx]]></title>
-    <link href="http://edrago.github.com/2013/03/19-installing-mumble-django-behind-nginx.html"/>
-    <updated>2013-03-19T11:20:00-03:00</updated>
-    <id>http://edrago.github.com/2013/03/installing-mumble-django-behind-nginx</id>
-    <content type="html"><![CDATA[<p>So, I&#8217;ve been using murmur (the mumble server) on my VPS to host a server where
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Installing Mumble-Django Under Virtualenv and Behind Nginx</h2>
+	<div class="entry-content"><p>So, I&#8217;ve been using murmur (the mumble server) on my VPS to host a server where
 my friends can gather and talk freely for some time now. But none of then has
 much expertise using technical computer programs, and I&#8217;ve been looking into a
 front-end interface that would offer an easy way to some of then manage the
@@ -235,120 +295,98 @@ Enjoy your new Murmur web front-end.</p>
 
 <!-- Link References -->
 
-]]></content>
-  </entry>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
   
-  <entry>
-    <title type="html"><![CDATA[Oldschool multiplayer goodness with DOSBox]]></title>
-    <link href="http://edrago.github.com/2013/03/08-oldschool-multiplayer-goodness-with-dosbox.html"/>
-    <updated>2013-03-08T13:55:00-03:00</updated>
-    <id>http://edrago.github.com/2013/03/oldschool-multiplayer-goodness-with-dosbox</id>
-    <content type="html"><![CDATA[<p>  So, yesterday me and some friends were talking about how cool some of our
-childhood games were, and trying to remember the name of some of those titles
-or googling in search of these. Problem is, fond memories like these tends to
-distort the reality, and trying to find a title that you even wasn&#8217;t capable of
-understanding a half-dozen words and by a few equivocated details&#8230;
-You see, it doesn&#8217;t work all that well.</p>
-
-<p>  I digress.</p>
-
-<p>  Anyway&#8230; At one point we were talking about a game that most of us happened to
-had played, and agreed that it could bring lots of fun to play some multiplayer\
-matchs, specially because of the fact that we had played only single-player at
-the time.</p>
-
-<p>  The game in question is <strong>Constructor</strong>.</p>
-
-<p>  <img src="http://upload.wikimedia.org/wikipedia/en/9/9a/Constructor-pc.jpg" title="Constructor Cover" alt="Cover art" /></p>
-
-<p>But as this is a DOS/Win95 game, it generally don’t run in modern systems. This problem is solved by utilizing a x86/DOS emulator program, like <a href="http://www.dosbox.com/">DOSBox</a>. Other setback is that it uses an old network protocol for multiplayer, called IPX. So let’s get this old gem going.</p>
-
-<!-- more -->
 
 
-<h3>FYI</h3>
-
-<p>First, I just want to make clear that these steps propably work with various old games as long as they use the IPX network protocol (like Doom, for example), but I don’t tested with other titles to know for sure. Maybe with for some just the installation process will work.</p>
-
-<h2>Installing and running old games with DOSBox</h2>
-
-<p>I will use windows path style to explaim the process, but you just need to adapt it according to your OS.</p>
-
-<p>Fist we need to mount the location that we want to install the game, for simplicity sake I chose C:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;mount c "c:\"</span></code></pre></td></tr></table></div></figure>
+<time datetime="2013-03-19T11:20:00-03:00" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time></div>
+	<div class="tags">
 
 
-<p>I am using an ISO image because I find it to be more convenient and created a ‘constructor’ folder beforehand, but you could mount your CD drive too. To mount an CD image:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;imgmount d "path\to\image.iso" -t iso</span></code></pre></td></tr></table></div></figure>
+	<a class='category' href='/blog/categories/mumble/'>Mumble</a>, <a class='category' href='/blog/categories/nginx/'>Nginx</a>, <a class='category' href='/blog/categories/python/'>Python</a>
 
 
-<p>Or your physical drive:</p>
+</div>
+	
+</div></article>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;mount d "D:\" -t cdrom</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We need to change our drive. Then, proceed to install the game from the disc.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Z:\&gt;D:
-</span><span class='line'>D:\&gt;Install.exe
-</span><span class='line'># Then we can open the folder that you installed the game and test if worked
-</span><span class='line'>C:\&gt;Game.exe</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>NOTE:</strong> Constructor needs the CD to execute and searchs for it in the ‘D:’ drive. So you need to mount it using this letter everytime you want to start the game.</p>
-
-<p>Great, the game is up and running. Now we just need to setup the IPX emulation. The best part? DOSBox ships with that feature already.</p>
-
-<h2>Getting multiplayer to work</h2>
-
-<p>Now that we have our game set up, we are going to enable the IPX emulation in DOSBox, that comes disabled by default.</p>
-
-<p>First, close DOSBox if it’s running and open the configuration file, that can be found in the following directory in Windows 7 (For other OS information look <a href="http://www.dosbox.com/wiki/Dosbox.conf">here</a>):</p>
-
-<p><em>C:\Users\<strong>&lt;Your Username></strong>\AppData\Local\DOSBox\dosbox.conf</em></p>
-
-<p>Now search for a line that says <em>“ipx=false”</em> at the end of the file and change the value to true.</p>
-
-<p>Finally, open DOSBox again and type the following command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Port is optional, default is 213
-</span><span class='line'>Z:\&gt;ipxnet startserver [port]</span></code></pre></td></tr></table></div></figure>
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-<p>You should receive a <em>“IPX Tunneling Server started”</em> message. Now your friends can connect to your computer through your IP address, via LAN or Internet:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Again, port is optional, if you started with a custom one, inform your friend
-</span><span class='line'>Z:\&gt;ipxnet connect &lt;ip&gt; [port]</span></code></pre></td></tr></table></div></figure>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Edson Drago
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
 
 
-<p>If you have any problems with connection, make sure that you don’t have any firewall blocking DOSBox or that the correct port is <a href="http://portforward.com/">being forwarded</a> by your router.</p>
+<script type="text/javascript">
+      var disqus_shortname = '8bit-triangles';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://edrago.github.com/2013/03/19-installing-mumble-django-behind-nginx.html';
+        var disqus_url = 'http://edrago.github.com/2013/03/19-installing-mumble-django-behind-nginx.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
-<p>Open the game again and enjoy your afternoon lost robbing your firend’s HQ, sending a Hippie to protest in front of his factory and Tenants that never were happy once in their lives.</p>
 
-<h3><em>Fim</em></h3>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA["Hello World"]]></title>
-    <link href="http://edrago.github.com/2013/03/07-hello-world.html"/>
-    <updated>2013-03-07T15:04:00-03:00</updated>
-    <id>http://edrago.github.com/2013/03/hello-world</id>
-    <content type="html"><![CDATA[<p>Here I go.</p>
-]]></content>
-  </entry>
-  
-</feed>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-39198265-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nginx | 8-bit Triangles]]></title>
+  <link href="http://edrago.github.com/blog/categories/nginx/atom.xml" rel="self"/>
+  <link href="http://edrago.github.com/"/>
+  <updated>2013-03-19T12:13:11-03:00</updated>
+  <id>http://edrago.github.com/</id>
+  <author>
+    <name><![CDATA[Edson Drago]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Mumble-Django under virtualenv and behind Nginx]]></title>
+    <link href="http://edrago.github.com/2013/03/19-installing-mumble-django-behind-nginx.html"/>
+    <updated>2013-03-19T11:20:00-03:00</updated>
+    <id>http://edrago.github.com/2013/03/installing-mumble-django-behind-nginx</id>
+    <content type="html"><![CDATA[<p>So, I've been using murmur (the mumble server) on my VPS to host a server where
+my friends can gather and talk freely for some time now. But none of then has
+much expertise using technical computer programs, and I've been looking into a
+front-end interface that would offer an easy way to some of then manage the
+server, as I can't be online all the time.</p>
+
+<p>After some research I ended up choosing Mumble-Django, because lately I've been
+learning a little python and got interested in setting up the Django web-
+framework, so there's my chance. The only problem was to set it up with Nginx,
+as I found no tutorials, only for setting it with Apache or Lighthttp.</p>
+
+<p>Without further ado, here's how I set it up on my VPS.</p>
+
+<!-- More -->
+
+
+<h3>Some disclaimer first</h3>
+
+<p>I installed Mumble-Django on my server somewhat following the <em>manual
+installation <a href="http://docs.mumble-django.org/en/installation.html#manual-installation">guide</a></em> from the official homepage, with some sparse
+information helping to choose and learn how to use Gunicorn (Green Unicorn) WSGI
+HTTP server built with python.<br/>
+Other detail is that I'm doing all the installation and configuration in my VPS
+with Debian 6.0 (Squeeze), some steps or details may change in other linux
+distributions.
+It's presumed that the reader has some basic knowledge of Linux and Nginx.</p>
+
+<h2>Preparing the Environment</h2>
+
+<p>First of all, I wanted to setup a secure and easy to handle Python environment.
+The best solution I found was to use <a href="https://pypi.python.org/pypi/virtualenv">virtualenv</a> tool and run it from source
+. So, let's get our hands with the initial setup.</p>
+
+<p>First, download the source from the <a href="https://pypi.python.org/pypi/virtualenv">official page</a> on pypi wiki, uncompress
+it and initialize the Env. Install the Mumble server (<em>murmur</em>) if you don't
+have it already.
+<code>
+$ cd virtualenv
+$ python virtualenv.py MD
+$ aptitude install mumble-server # For Debian
+</code></p>
+
+<p>After that, use the <em>activate</em> script that's present on the bin folder of the
+'MD' env so you can use the contents of env's <em>bin</em> as functions.<br/>
+This isn't necessary, is just for convenience. Then install some dependencies.
+<code>
+$ source MD/bin/activate
+  # Pil needs to be compiled in the process and might protest due to some
+  # dependencies, I installed my distro package, but you could try to install
+  # it with pip
+  # i.e. pip install pil
+$ aptitude install python-imaging # PIL
+$ aptitude install python-simplejson # Same as PIL, 'pip install simplejson'
+$ pip install django==1.2.3
+$ pip install django-registration
+$ pip install gunicorn
+</code></p>
+
+<p>Now, Mumble-Django needs some way to communicate with the murmur process and we
+have two options. Using <a href="http://docs.mumble-django.org/en/connecting_murmur_to_dbus.html#en-connecting-dbus" title="Connecting Murmur to DBus">D-Bus</a> or <a href="http://docs.mumble-django.org/en/connecting_murmur_to_ice.html#en-connecting-ice" title="Making Murmur available via Ice">Ice</a>. I chose Ice, but you can pick
+whatever method that you think it's best.</p>
+
+<p>If you chose Ice you should install the <em>zeroc</em> library. In debian it comes in
+the package <em>"python-zeroc-ice"</em>.</p>
+
+<p>Because I am installing everything under virtualenv, it's necessary to provide
+locally the libraries that I installed globally. So I link the necessary libs to
+the <strong><em>lib</em></strong> folder in my Env.
+<code>
+$ ln -s /usr/share/pyshared/PIL lib/python2.6/PIL
+$ ln -s /usr/share/pyshared/simplejson lib/python2.6/simplejson
+$ ln -s /usr/share/pyshared/Ice* lib/python2.6/
+$ ln -s /usr/lib/pyshared/python2.6/IcePy.so lib/python2.6/
+</code></p>
+
+<h2>Installing Mumble-Django</h2>
+
+<p>The next step is to download the lastest version of the Mumble-Django from their
+<a href="https://bitbucket.org/Svedrin/mumble-django/downloads">repository</a>. Go to "Tags" tab and download the version you want. I recommendto download from the <strong>Tag</strong> <em>stable</em>.<br/>
+Then we download and uncompress it to our Env folder and do the initial setup.
+<code>
+$ wget https://bitbucket.org/Svedrin/mumble-django/get/stable.tar.gz
+$ tar xvfz stable.tar.gz # rename the folder extracted to what you want
+$ cd mumble-django/pyweb # I renamed mine to mumble-django
+  # If you are using Ice, make sure that the path to Slice configured in settings.py
+  # (variables SLICE and SLICEDIR) points to the correct location of Murmur.ice
+  # file. If using Murmur 1.2.3 or higher you can just use getslice as below
+$ python manage.py getslice
+$ python manage.py syncdb
+$ python manage.py checkenv # To check if everything is configured correctly
+</code>
+<strong>Note:</strong> Don't forget to do this after using the <strong><em>activate</em></strong> script or using
+the python provided in the <strong><em>env's bin</em></strong> folder.<br/>
+<strong>Note2:</strong> Create an admin user when asked or run <em>python manage.py
+createsuperuser</em> later. This is used to login to the admin system.<br/>
+<strong>Note3:</strong> If you are doing this on your machine, you can see the page running
+by executing the command <em>"python manage.py runserver 0.0.0.0:8000"</em> and access
+it in your browser with <em>localhost:8000</em>.<br/>
+<strong>Note4:</strong> To disable the <strong>activate</strong> script, just run the command <strong>deactivate</strong>.</p>
+
+<h2>Configuring Nginx and Gunicorn</h2>
+
+<p>After you configured your mumble-django accordingly, it's time to deploy it with
+gunicorn through Nginx. Let's start with Nginx config file. The location of the
+file depends on your distro.
+``` nginx mumble-django.conf
+server {</p>
+
+<pre><code> listen      80;
+ server_name your.domain.com;
+ location / {
+     proxy_pass_header Server;
+     proxy_set_header Host $http_host;
+     proxy_redirect off;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Scheme $scheme;
+     proxy_connect_timeout 10;
+     proxy_read_timeout 10;
+     proxy_pass http://127.0.0.1:8888;
+ }
+ location /static {
+     alias /home/user/virtualenv-1.9.1/MD/mumble-django/htdocs;
+ }
+ location /media {
+     alias /home/user/virtualenv-1.9.1/MD/lib/python2.6/site-packages/django/contrib/admin/media/;
+ }
+ location /mumble/media {
+     alias /home/user/virtualenv-1.9.1/MD/mumble-django/pyweb/mumble/media/;
+ }
+</code></pre>
+
+<p>}
+```
+<strong>Note:</strong> You can insert this directly in <em>nginx.conf</em> file or source it from
+another file, like I did using <em>mumble-django.conf</em> file.</p>
+
+<p>Check if the configuration is ok, and if so, reload the configuration to nginx
+instance.
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /etc/init.d/nginx configtest
+</span><span class='line'>$ /etc/init.d/nginx reload</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now we'll start the program using gunicorn. You need to go to the folder that
+contains the <em>mumble-django.wsgi</em> file (At the moment, in the root of the Mumble
+Django project folder).
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd virtualenv/MD/mumble-django
+</span><span class='line'>$ ../bin/gunicorn_django -w 3 -b 127.0.0.1:8888</span></code></pre></td></tr></table></div></figure></notextile></div>
+The <em>-w</em> parameter defines the number of worker processes that will serve the
+requests. Use Ctrl+Z to send the process to background.
+Your server should be running correctly and you should be able access it now
+from your browser. It's all done.</p>
+
+<p>Now, you could setup <a href="http://supervisord.org/"><em>supervisor</em></a> or a similar tool to manage your Mumble
+Django instance. Maybe I'll write about this in the future.
+Enjoy your new Murmur web front-end.</p>
+
+<h4><em>The end</em></h4>
+
+<!-- Link References -->
+
+]]></content>
+  </entry>
+  
+</feed>
