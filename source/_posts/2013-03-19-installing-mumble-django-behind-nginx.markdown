@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Installing Mumble-Django under virtualenv and behind Nginx"
-date: 2013-03-11 10:20
+date: 2013-03-19 11:20
 comments: true
 categories: [Python, Mumble, Nginx]
 ---
@@ -73,7 +73,7 @@ the package _"python-zeroc-ice"_.
 Because I am installing everything under virtualenv, it's necessary to provide
 locally the libraries that I installed globally. So I link the necessary libs to
 the ___lib___ folder in my Env.
-``` 
+```
 $ ln -s /usr/share/pyshared/PIL lib/python2.6/PIL
 $ ln -s /usr/share/pyshared/simplejson lib/python2.6/simplejson
 $ ln -s /usr/share/pyshared/Ice* lib/python2.6/
@@ -103,12 +103,12 @@ __Note2:__ Create an admin user when asked or run _python manage.py
 createsuperuser_ later. This is used to login to the admin system.  
 __Note3:__ If you are doing this on your machine, you can see the page running
 by executing the command _"python manage.py runserver 0.0.0.0:8000"_ and access
-it in your browser with _localhost:8000_.
+it in your browser with _localhost:8000_.  
 __Note4:__ To disable the __activate__ script, just run the command __deactivate__.
 
 Configuring Nginx and Gunicorn
 ------------------------------
-After you configured your mumble-django accordingly, it's time to deploy
+After you configured your mumble-django accordingly, it's time to deploy it with
 gunicorn through Nginx. Let's start with Nginx config file. The location of the
 file depends on your distro.
 ``` nginx mumble-django.conf
@@ -116,12 +116,19 @@ server {
      listen      80;
      server_name your.domain.com;
      location / {
+         proxy_pass_header Server;
+         proxy_set_header Host $http_host;
+         proxy_redirect off;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_set_header X-Scheme $scheme;
+         proxy_connect_timeout 10;
+         proxy_read_timeout 10;
          proxy_pass http://127.0.0.1:8888;
      }
      location /static {
          alias /home/user/virtualenv-1.9.1/MD/mumble-django/htdocs;
      }
-     location /static/admin {
+     location /media {
          alias /home/user/virtualenv-1.9.1/MD/lib/python2.6/site-packages/django/contrib/admin/media/;
      }
      location /mumble/media {
@@ -132,21 +139,35 @@ server {
 __Note:__ You can insert this directly in _nginx.conf_ file or source it from
 another file, like I did using _mumble-django.conf_ file.
 
-Now we'll start the server using gunicorn. You need to go to the folder that
-contains the _mumble-django.wsgi_ file (At the time, in the root of the Mumble
-Django project folder.
-```
+Check if the configuration is ok, and if so, reload the configuration to nginx
+instance.
+{% codeblock %}
+$ /etc/init.d/nginx configtest
+$ /etc/init.d/nginx reload
+{% endcodeblock %}
+
+Now we'll start the program using gunicorn. You need to go to the folder that
+contains the _mumble-django.wsgi_ file (At the moment, in the root of the Mumble
+Django project folder).
+{% codeblock %}
 $ cd virtualenv/MD/mumble-django
 $ ../bin/gunicorn_django -w 3 -b 127.0.0.1:8888
-```
-Now your server should be running correctly and you should be able access it
-from your browser.  
+{% endcodeblock %}
 The _-w_ parameter defines the number of worker processes that will serve the
-requests.
+requests. Use Ctrl+Z to send the process to background.
+Your server should be running correctly and you should be able access it now
+from your browser. It's all done.
+
+Now, you could setup [_supervisor_][4] or a similar tool to manage your Mumble
+Django instance. Maybe I'll write about this in the future.
+Enjoy your new Murmur web front-end.
+
+#### _The end_
 
 <!-- Link References -->
   [1]: http://docs.mumble-django.org/en/installation.html#manual-installation
   [2]: https://pypi.python.org/pypi/virtualenv
   [3]: https://bitbucket.org/Svedrin/mumble-django/downloads
+  [4]: http://supervisord.org/
   [D-Bus]: http://docs.mumble-django.org/en/connecting_murmur_to_dbus.html#en-connecting-dbus "Connecting Murmur to DBus"
   [Ice]: http://docs.mumble-django.org/en/connecting_murmur_to_ice.html#en-connecting-ice "Making Murmur available via Ice"
